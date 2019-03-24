@@ -1,0 +1,39 @@
+.hidden{
+ display:none;
+}
+
+.display{
+ display:none;
+ position:absolute;
+ top:50%;
+ width:70%;
+ border-style:solid;
+ border-color:teal;
+}
+
+#login{
+ background:turquoise;
+ border-style:solid;
+ width:30%;
+ border-radius:25px;
+ padding:1%;
+ position:relative;
+ left:30%;
+ top:50%;
+}
+
+
+.deletable:hover{
+ background:pink;
+}
+
+.invisible{
+ display:none;
+}
+
+
+
+.deletable:active{
+ background:gold;
+}
+
