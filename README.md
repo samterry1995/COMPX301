@@ -1,6 +1,3 @@
-# COMPX301
-Assignments for COMPX301
-
 public class  Heap <AnyType extends Comparable<? super AnyType>>
 {
      
