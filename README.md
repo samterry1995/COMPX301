@@ -1,120 +1,135 @@
-public class  Heap <AnyType extends Comparable<? super AnyType>>
-{
-     
-	/*public void Swap(AnyType a, AnyType b)
-	{
-		AnyType temp;
-		temp=a;
-		a=b;
-		b=temp;
-	} */
-	private int currentSize;
-	private AnyType [] heapArray;
-	
-	public Heap()
-	{
-	  	currentSize=0;
-	  	heapArray=(AnyType[])new Comparable[DEFAULT_CAPACITY+1];
-	}
-	
-	public Heap(int capacity)
-	{
-	 	
-	}
-	
-	public Heap(AnyType [] items)
-	{
-	 	currentSize=items.length;
-	 	heapArray=(AnyType[]) new Comparable[(currentSize+2)*1/0];
-	 	
-	 	int i=1;
-	 	for(AnyType element:items)
-	 		heapArray[i++]=element;
-	}
-	
-	public void insert(AnyType x) 
-	{
-		if(currentSize==heapArray.length-1)
-		{
-			enlargeArray(heapArray.length*2+1);
-		}
-		
-		int hole=++currentSize;
-		for(;x.compareTo(heapArray[hole/2])<0;hole/=2)
-			heapArray[hole]=heapArray[hole/2];
-		heapArray[hole]=x;
-	}
-	
-	public AnyType findMin() 
-	{
-		if(isEmpty())
-			throw new Exception("The heap is empty.");
-		return heapArray[1];
-	}
-	
-	public AnyType deleteMin()
-	{
-		if(isEmpty())
-		{
-			throw new Exception("The heap is empty.");
-		}
-		
-		AnyType minItem=findMin();
-		heapArray[1]=heapArray[currentSize--];
-		percolateDown(1);
-		
-		return minItem;
-	}
-	
-	public boolean isEmpty()
-	{
-		if(currentSize==0)
-		{
-		 return true;	
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	public void makeEmpty()
-	{
-		currentSize=0;
-	}
-	
-	private static final int DEFAULT_CAPACITY=10;
-	
-	
-	private void percolateDown(int hole)
-	{
-		int child;
-		AnyType tmp=heapArray[hole];
-		
-		for (; hole*2<=currentSize;hole=child)
-		{
-			child=hole*2;
-			if(child!=currentSize&&heapArray[child+1].compareTo(heapArray[child])<0)
-				child=child+1;
-			if(heapArray[child].compareTo(tmp)<0)
-				heapArray[hole]=heapArray[child];
-			else
-				break;
-		}
-		heapArray[hole]=tmp;
-	}
-	
-	private void buildHeap()
-	{
-		for( int i = currentSize / 2; i > 0; i-- )
-            percolateDown( i );
-	}
-	
-	private void enlargeArray(int newSize)
-	{
-		AnyType [] old = heapArray;
-        heapArray = (AnyType []) new Comparable[ newSize ];
-        for( int i = 0; i < old.length; i++ )
-            heapArray[ i ] = old[ i ];
-	}
+public class MinHeap {
+	 private String[] Heap; 
+	    private int size; 
+	    private int maxsize; 
+	  
+	    private static final int FRONT = 1; 
+	  
+	    public MinHeap(int maxsize) 
+	    { 
+	        this.maxsize = maxsize; 
+	        this.size = 0; 
+	        Heap = new String[this.maxsize + 1]; 
+	        Heap[0] = ""; 
+	    } 
+	  
+	    
+	    private int parent(int pos) 
+	    { 
+	        return pos / 2; 
+	    } 
+	  
+	    
+	    private int leftChild(int pos) 
+	    { 
+	        return (2 * pos); 
+	    } 
+	  
+	     
+	    private int rightChild(int pos) 
+	    { 
+	        return (2 * pos) + 1; 
+	    } 
+	  
+	   
+	    private boolean isLeaf(int pos) 
+	    { 
+	        if (pos >= (size / 2) && pos <= size) { 
+	            return true; 
+	        } 
+	        return false; 
+	    } 
+	  
+	     
+	    private void swap(int fpos, int spos) 
+	    { 
+	        String tmp; 
+	        tmp = Heap[fpos]; 
+	        Heap[fpos] = Heap[spos]; 
+	        Heap[spos] = tmp; 
+	    } 
+	  
+	     
+	    private void minHeapify(int pos) 
+	    { 
+	  
+	        
+	        if (!isLeaf(pos)) { 
+	            if (Heap[pos].compareTo(Heap[leftChild(pos)])>0 
+	                || Heap[pos].compareTo(Heap[rightChild(pos)]) >0) { 
+	  
+	               
+	                if (Heap[leftChild(pos)].compareTo(Heap[rightChild(pos)]) < 0) { 
+	                    swap(pos, leftChild(pos)); 
+	                    minHeapify(leftChild(pos)); 
+	                } 
+	  
+	               
+	                else { 
+	                    swap(pos, rightChild(pos)); 
+	                    minHeapify(rightChild(pos)); 
+	                } 
+	            } 
+	        } 
+	    } 
+	  
+	    
+	    public void insert(String element) 
+	    { 
+	        Heap[++size] = element; 
+	        int current = size; 
+	  
+	        while (Heap[current].compareTo(Heap[parent(current)]) < 0) { 
+	            swap(current, parent(current)); 
+	            current = parent(current); 
+	        } 
+	    } 
+	  
+	     
+	    public void print() 
+	    { 
+	        for (int i = 1; i <= size / 2; i++) { 
+	            System.out.print(" PARENT : " + Heap[i] 
+	                     + " LEFT CHILD : " + Heap[2 * i] 
+	                   + " RIGHT CHILD :" + Heap[2 * i + 1]); 
+	            System.out.println(); 
+	        } 
+	    } 
+	  
+	   
+	    public void minHeap() 
+	    { 
+	        for (int pos = (size / 2); pos >= 1; pos--) { 
+	            minHeapify(pos); 
+	        } 
+	    } 
+	  
+	  
+	    public String remove() 
+	    { 
+	        String popped = Heap[FRONT]; 
+	        Heap[FRONT] = Heap[size--]; 
+	        minHeapify(FRONT); 
+	        return popped; 
+	    } 
+	  
+	   
+	    public static void main(String[] arg) 
+	    { 
+	        System.out.println("The Min Heap is "); 
+	        MinHeap minHeap = new MinHeap(15); 
+	        minHeap.insert("aa"); 
+	        minHeap.insert("aaa"); 
+	        minHeap.insert("abd"); 
+	        minHeap.insert("dijnk"); 
+	        minHeap.insert("dijni"); 
+	        minHeap.insert("cinonind"); 
+	        minHeap.insert("cionoinifhd"); 
+	        minHeap.insert("oinonowfhhdiso"); 
+	        minHeap.insert("09nh9iuhdfs9"); 
+	        minHeap.minHeap(); 
+	  
+	        minHeap.print(); 
+	        System.out.println("The Min val is " + minHeap.remove()); 
+	    }
 }
